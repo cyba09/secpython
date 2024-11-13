@@ -4,6 +4,47 @@ import re
 from bs4 import BeautifulSoup
 
 app = Flask(__name__)
+def fetch_sec_data(arr):
+    for item in arr:
+        # Ensure CIK is 10 digits
+        cik = item['CIK'].zfill(10)
+        formatted_cik = cik.lstrip('0')  # Remove leading zeros for formatted CIK
+        url = f'https://data.sec.gov/submissions/CIK{cik}.json'
+
+        try:
+            # Fetch data from the URL
+            response = requests.get(url)
+            response.raise_for_status()  # Check for HTTP errors
+            
+            # Parse JSON response
+            json_data = response.json()
+            filings = json_data.get('filings', {}).get('recent')
+
+            if filings:
+                # Extract the first accession number and primary document
+                first_accession_number = filings.get('accessionNumber', [None])[0]
+                formatted_acc = first_accession_number.replace('-', '') if first_accession_number else None
+                first_primary_document = filings.get('primaryDocument', [None])[0]
+                
+                if formatted_acc and first_primary_document:
+                    link = f'https://www.sec.gov/Archives/edgar/data/{formatted_cik}/{formatted_acc}/{first_primary_document}'
+                    print(link)
+                    
+                   # Call appropriate function based on formType
+                    if item.get('formType') == '4':
+                        #scrape4(link)
+                        True
+                    else:
+                        True
+                        #scrape144(link)
+                else:
+                    print("No valid accession number or primary document found.")
+            else:
+                print("No recent filings found.")
+        
+        except requests.exceptions.RequestException as error:
+            print(f"Error fetching {url}: {error}")
+
 def fetch_and_parse_entries(url):
     headers = {
         'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -67,11 +108,11 @@ def fetch_and_parse_entries(url):
         
 @app.route('/')
 def home():
-    url = 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=&company=&dateb=&owner=include&start=0&count=40&output=atom'
-    entries = fetch_and_parse_entries(url)
-    print(entries)
     return 'Hello, World!'
 
-@app.route('/about')
-def about():
-    return 'About'
+@app.route('/activate')
+def activate():
+    url = 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=&company=&dateb=&owner=include&start=0&count=40&output=atom'
+    entries = fetch_and_parse_entries(url)
+    fetch_sec_data(entries)
+    return 'Script running'
