@@ -1,5 +1,7 @@
 from flask import Flask
 import requests
+import re
+from bs4 import BeautifulSoup
 
 app = Flask(__name__)
 def fetch_and_parse_entries(url):
