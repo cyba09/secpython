@@ -68,8 +68,8 @@ def fetch_and_parse_entries(url):
 @app.route('/')
 def home():
     url = 'https://www.sec.gov/cgi-bin/browse-edgar?action=getcurrent&CIK=&type=&company=&dateb=&owner=include&start=0&count=40&output=atom'
-entries = fetch_and_parse_entries(url)
-print(entries)
+    entries = fetch_and_parse_entries(url)
+    print(entries)
     return 'Hello, World!'
 
 @app.route('/about')
