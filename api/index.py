@@ -13,7 +13,24 @@ def fetch_sec_data(arr):
 
         try:
             # Fetch data from the URL
-            response = requests.get(url)
+            headers = {
+                'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'accept-language': 'en-ZA,en-GB;q=0.9,en-US;q=0.8,en;q=0.7',
+                'cache-control': 'max-age=0',
+                'cookie': 'nmstat=891756e9-a78e-9bb3-a82e-c13770ef859a; _ga=GA1.1.417854797.1730136641; _4c_=%7B%22_4c_s_%22%3A%22dZJdT4MwFIb%2FytLrQXqgtJQ7MxPjhRqNH5fLRstopkBKHc6F%2F%2B4pMD9I5Ab6nOe8PSk9ka7UFclAxEAFZ8AoE0uy18eWZCdijfKvA8mIKiCHjeRBorQMGE9UIHVOA5EIvkmgKCJIyJJ8DFlCQsRjCWnSL4mqzhlWK92aXfXHSyFmnKFnGjeJWKEQc6ykcTJzkXj3HLmZZ4112%2F1EjYVEpLMoT1Bt7HzXf9W8mdQTyWulcXuQIaQhDYoW53CfnkSU%2BNBavedu7Y6N1zq9XbRqjwWlDybX684oVw79gz7RUptd6Tym6YD9bATwqzOVqrt520S%2F2yRIpFtbd632navS1m96AbGXa%2Fyj5GXo8MNaXWhrBw1XrXF%2Bzlbn4a4%2BTABvwciCkT0bT9XicfWA%2FPYXuV%2Fd3Uzo6mL9dH2JCwZ4aExIEU4Hi7eL9OdzBeBRSoVgeNLOvZIs5Yz6p%2B%2F7Lw%3D%3D%22%7D; _ga_300V1CHKH1=GS1.1.1731076407.16.0.1731076414.0.0.0; _ga_CSLL4ZEK4L=GS1.1.1731076407.16.0.1731076414.0.0.0; ak_bmsc=785F04B0D1862203FA26B7F7A7FADDCD~000000000000000000000000000000~YAAQcW0QAkkPkh+TAQAA52qjKRmqZlbChMCEq6OtcBKUq3WEYrgUNVyC6CA84fZq0r98GsJDWdMjyvmyR1leyARz8UEse05u2c+wQGByqSNCEHHUPhsBKu8jVAd/jsGRBcOYIKpgYpBu3/u+8+mwQ1SUesdH4zYJqNn7F3px4Oehw3nSqqJhHcVKgRZnhWFsrwim2YFfUt79TT0dEr24KsOubMuz+toLmt9/OoBHVhd91zTJ5LLCGc+lQdUWZu6y6NK3YfFNGaGAUCJpjRQuoDq9OQgFyo4yIhz3M1+1vJkBMSAnu+XLIDhcBo+BdHxIyrDWM4fmBq5PfqmnGbgNYZhkVZg0XCSncdY2THbTaCRI+Hr3AA9T+yfUJu4uB/FdDCXoxcKI; bm_sv=95AED201C57ABEA7937657C22D39E360~YAAQcW0QAq0Pkh+TAQAATHSjKRmJrwt7TxkmksvcZtE5luGnd9fz6/iDvR7E7sbYVHcUR+OaF75AZScdsHofJJsBx7Tjp5wPwuFhuVVtFU1fIhsr8nl8GWjUnTPZnFJIGZtGZ1P3Uvvsjv/hTIRzrFOe0fUn1WzCv1nkQuXIwFFMk8ivDZlNC+Uo7NiVxIx458xam8SgIavBdTNkvUu185HTLKKa4I5fmCxZ90yU2rweS9CoXP7fpH5sCvLS~1',
+                'priority': 'u=0, i',
+                'sec-ch-ua': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
+                'sec-ch-ua-mobile': '?0',
+                'sec-ch-ua-platform': '"Windows"',
+                'sec-fetch-dest': 'document',
+                'sec-fetch-mode': 'navigate',
+                'sec-fetch-site': 'none',
+                'sec-fetch-user': '?1',
+                'upgrade-insecure-requests': '1',
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+            }
+
+            response = requests.get(url, headers=headers)
             response.raise_for_status()  # Check for HTTP errors
             
             # Parse JSON response
